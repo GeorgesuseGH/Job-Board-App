@@ -95,3 +95,5 @@ When you are ready change directories to your front_end folder and build your di
 - node server.js or nodemon server.js 
 
 
+EXTRA FEATURES : i want to add a way for employers to change there profile image and also a way for them to delete there posts , and for candidates to post 1 post a month to ask for a quick need of a job and what they would be willing to settle for .
+
