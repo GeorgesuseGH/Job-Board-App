@@ -51,43 +51,41 @@ return res.send("Catched error")
 })
 
 
-resetRoute.get("/reset-password",(req,res)=>{
-    const {token}=req.query
-    if(!token){
-        return res.send("Token isnt in the url")
-    }
-
-    //should hold the form to set the new password and then it will be sent to /reset-password and while also send the raw token along
-    res.json({success:true,state:"Redirectting to the reset password page"})
-})
-
 
 resetRoute.post("/api/reset-password",async (req,res)=>{
 
 
-    const {token,newPassword}=req.body
+    const {token,newPass}=req.body
     
-    if(!token||!newPassword)
+    if(!token||!newPass)
 {
-    return res.send("Token or newPassword got lost , please reenter the link or request a new one")
+    return res.send("Token or newPass got lost , please reenter the link or request a new one")
 }
 try{
 const hashedToken= crypto.createHash("sha256").update(token).digest("hex");
-const tokenRow=await pool.query("SELECT * FROM password_resets WHERE token_hash = $1 AND expires_at > Now() AND used = false",[token])
+const tokenRow=await pool.query("SELECT * FROM password_resets WHERE token_hash = $1 AND expires_at > Now() AND used = false",[hashedToken])
 if(tokenRow.rows.length==0){
 return res.send("It would seem like the Token already expired, or something isnt right!")
 }
-const hashNewPass=await bcrypt.hash(newPassword, 10);
+const hashNewPass=await bcrypt.hash(newPass, 10);
 const userId=tokenRow.rows[0].user_id
-const oldPass=await pool.query("SELECT password_hash from users wehre user_id =$1",[userId])
+
+const oldPass=await pool.query("SELECT password_hash from users where user_id =$1",[userId])
+
 const insertNewPass=await pool.query('UPDATE users SET password_hash=$1 WHERE user_id = $2',[hashNewPass,userId])
 if(insertNewPass.rowCount==0){
     
    const rollback=await pool.query("UPDATE users SET password_hash = $1 WHERE user_id = $2",[oldPass,userId])
     return res.send("Something went wrong with the insertion , please restart the process.")
 }
-await pool.query("UPDATE password_resets SET used = true WHERE token_hash = $1", [token]);
-res.status(200).json({success:true,state:"Password updated"})
+ const update=await pool.query("UPDATE password_resets SET used = true WHERE token_hash = $1", [hashedToken]);
+ 
+ if(update.rowCount>0){
+    res.status(200).json({success:true,state:"Password updated"})
+ }
+else{
+    return res.json({success:false,state:"error occured"})
+}
 }
 catch(err){
     console.log(err)

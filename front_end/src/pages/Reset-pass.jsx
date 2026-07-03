@@ -36,9 +36,9 @@ export const SetNewPass = () => {
     const [sendable, setSendable] = useState(false)
      const navigate=useNavigate()
     return (
-        <div>
-            <h1>Set new password</h1>
-            <form className="borer-2 rounded-xl shadow-2xl grid grid-cols-2" onSubmit={e => {
+        <div className="flex flex-col justify-center items-center gap-10">
+            <h1 className="text-red-700 text-2xl ">Set new password</h1>
+            <form className="border-2 rounded-xl shadow-2xl flex flex-col justify-center items-center gap-10 m-10" onSubmit={e => {
                 e.preventDefault();
                 if (newPass === confirm) {
                     setSendable(true)
@@ -56,12 +56,14 @@ export const SetNewPass = () => {
                     alert("Please make sure its the same password in both fields !")
                 }
 
-            }}><label>New Password :
-                    <input type="password" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={newPass}></input></label>
-                <label>Confirm new Password :
-                    <input type="password" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={confirm}></input></label>
-                <button type="submit" className="rounded-xl border-2 bg-linear-to-tl from-primary via-secondary to-primary">Set</button>
-            </form>
+            }}><label className="flex flex-row justify-items items-center m-5">New Password :
+                    <input onChange={e => setNewPass(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={newPass} autoComplete='new-password'></input></label>
+                <label  className="flex flex-row justify-items items-center  m-5">Confirm new Password :
+                    
+                    <input onChange={e => setConfirm(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={confirm}></input></label>
+               <div className="flex flex-row items-center justify-center m-5">
+                <button disable={sendable} type="submit" className="rounded-xl border-2 bg-linear-to-tl from-primary via-secondary to-primary w-20">Set</button>
+           </div> </form>
         </div>
     )
 }

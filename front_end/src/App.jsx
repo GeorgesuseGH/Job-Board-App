@@ -29,7 +29,7 @@ export function App() {
                 <Route path="/log-in" element={<LogInPage />} />
                         <Route path="/sign-up" element={<SignPage />} />
   <Route path="/reset-pass" element={<ResetPass/>}/>
-  <Route path="/reset-password" element={<SetNewPass/>}></Route>
+  <Route path="/reset-password" element={<SetNewPass/>}/>
   <Route path="/error" element={<ErrorPage/>}></Route>
       </Routes>
       <Footer></Footer>
