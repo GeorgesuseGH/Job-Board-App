@@ -57,13 +57,12 @@ route.post("/api/log-in", async (req, res) => {
 })
 
 
-
 route.post("/api/signup",upload.single("image"), async (req, res) => {
     const { isemployer, email, pass, firstName, lastName, phone, country} = req.body
     //I need to store passwords but hashed using bcrypt.hash()//
       const imgUrl = req.file
       ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
-      : null;
+      : null; // Creating a url for the location of the file
       console.log(req.body)
     if (isemployer !== undefined && email && pass && firstName && lastName && phone && country) {
        
