@@ -17,8 +17,8 @@ First of you need to have atleast close versions of these :
 
 Now you need to create your own data-base :
 - Check this video if you are new to using databases :
-  <iframe width="400" height="300" src="https://www.youtube.com/embed/KuQUNHCeKCk" 
-title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+  <video width="400" height="300" src="https://www.youtube.com/embed/KuQUNHCeKCk" 
+title="YouTube video player" controls allowfullscreen></video>
 - After installing PostgreSQL and logging you have to create a data base then create the tables .
 - These are some usefull commands :
  . CREATE DATABASE job_board
