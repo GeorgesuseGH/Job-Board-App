@@ -16,10 +16,11 @@ First of you need to have atleast close versions of these :
 - For the rest you can just run npm i  in the terminal and all the dependencies will be installed 
 
 Now you need to create your own data-base :
-- Check this video if you are new to using databases :
-  <a href="https://www.youtube.com/embed/KuQUNHCeKCk" ></a>
+
+[![Watch the video](https://img.youtube.com/vi/KuQUNHCeKCk/0.jpg)](https://www.youtube.com/watch?v=KuQUNHCeKCk)
 - After installing PostgreSQL and logging you have to create a data base then create the tables .
-- These are some usefull commands :
+- These are the commands to enter so you can use the app with no problems comming from the database :
+
  . CREATE DATABASE job_board
   
  . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN)
@@ -56,6 +57,7 @@ Fill the keys with your own info , also to get the port that you are using you n
 Then you will need to add another important file ,the  .env and it should contain:
 
    MY_SECRET="EXAMPLE"
+   
    RESEND_API_KEY='EXMAMPLE' // you will have to get this after loging in from the resend website 
 
    
