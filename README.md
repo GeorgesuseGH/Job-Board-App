@@ -14,7 +14,8 @@ First of you need to have atleast close versions of these :
 - npm v.11.13.0
 - PostgreSQL v.18.3
 
-- For the rest you can just run npm i  in the terminal in each folder (front_end and back_end )  after entering these (using git bash) : 
+- For the rest you can just run npm i  in the terminal in each folder (front_end and back_end )  after entering these (using git bash) :
+ 
  .git clone https://github.com/GeorgesuseGH/Job-Board-App.git
 
  .cd Job-Board-App
