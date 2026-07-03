@@ -58,7 +58,7 @@ resetRoute.get("/reset-password",(req,res)=>{
     }
 
     //should hold the form to set the new password and then it will be sent to /reset-password and while also send the raw token along
-    res.send("The reset should be soon after filling and submitting the form , please be patient .")
+    res.json({success:true,state:"Redirectting to the reset password page"})
 })
 
 

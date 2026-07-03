@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 export const ResetPass = () => {
     const [email, setEmail] = useState("")
     const [show, setShow] = useState(true)
@@ -28,13 +28,13 @@ export const ResetPass = () => {
     )
 }
 
-export const setNewPass = () => {
+export const SetNewPass = () => {
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
     const [newPass, setNewPass] = useState("")
     const [confirm, setConfirm] = useState('')
     const [sendable, setSendable] = useState(false)
-
+     const navigate=useNavigate()
     return (
         <div>
             <h1>Set new password</h1>
@@ -42,7 +42,14 @@ export const setNewPass = () => {
                 e.preventDefault();
                 if (newPass === confirm) {
                     setSendable(true)
-                    axios.post("http://localhost:5000/api/reset-password", { newPass, token }, { withCredentials: true }).then(res => console.log(res)).catch(err => console.log(err))
+                    axios.post("http://localhost:5000/api/reset-password", { newPass, token }, { withCredentials: true }).then(res => {
+                        if (res.data.success==true){
+                            navigate("/log-in",{replace:true})
+                        }
+                        else{
+                            navigate("/error",{replace:true})
+                        }
+                    }).catch(err => console.log(err))
                 }
                 else {
                     setSendable(false)

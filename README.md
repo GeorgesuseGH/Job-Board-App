@@ -13,7 +13,13 @@ First of you need to have atleast close versions of these :
 - Node.js v.24.16.0
 - npm v.11.13.0
 - PostgreSQL v.18.3
-- For the rest you can just run npm i  in the terminal and all the dependencies will be installed 
+
+- For the rest you can just run npm i  in the terminal in each folder (front_end and back_end )  after entering these (using git bash) : 
+ .git clone https://github.com/GeorgesuseGH/Job-Board-App.git
+
+ .cd Job-Board-App
+
+ and all the dependencies will be installed .
 
 Now you need to create your own data-base :
 
@@ -23,15 +29,17 @@ Now you need to create your own data-base :
 
  . CREATE DATABASE job_board
   
- . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN)
+ . \c job_board
+
+ . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
   
- . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT)
+ . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT);
   
-  . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255))
+  . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255));
   
-  . CREATE TABLE job_offers(job_details TEXT,job_id SERIAL PRIMARY KEY,phone VARCHAR(100),email VARCHAR(100),lvl TEXT,employment TEXT,versat TEXT,ft TEXT,loc TEXT,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE)
+  . CREATE TABLE job_offers(job_details TEXT,job_id SERIAL PRIMARY KEY,phone VARCHAR(100),email VARCHAR(100),lvl TEXT,employment TEXT,versat TEXT,ft TEXT,loc TEXT,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE);
   
-  . CREATE TABLE password_resets(id SERIAL PRIMARY KEY,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE,token_hash VARCHAR(200),expires_at TIMESTAMP WITHOUT TIME ZONE,used BOOLEAN)
+  . CREATE TABLE password_resets(id SERIAL PRIMARY KEY,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE,token_hash VARCHAR(200),expires_at TIMESTAMP WITHOUT TIME ZONE,used BOOLEAN);
 
 
 
@@ -52,9 +60,9 @@ export const pool = new Pool({
 
 
 
-Fill the keys with your own info , also to get the port that you are using you need to run "SHOW port" after being logged in to postgres.
+Fill the keys with your own info , also to get the port that you are using you need to run "SHOW port ;" after being logged in to postgres.
 
-Then you will need to add another important file ,the  .env and it should contain:
+Then you will need to add another important file ,the  .env in your back_end and it should contain:
 
    MY_SECRET="EXAMPLE"
    
