@@ -133,7 +133,7 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
                         <label hidden={!isemployer}>Profile photo :<input className=" rounded-md border-3" type="file"  required={isemployer} onChange={(e) => {
                             setImage(e.target.files[0])
 
-                        }} ></input>
+                        }} placeholder="Choose File" ></input>
                         </label>
                         <label hidden={isemployer}>Birthdate : <input className=" rounded-md border-3" type="date" value={birthdate} required={!isemployer} onChange={(e) => {
                             setBirthdate(e.target.value)

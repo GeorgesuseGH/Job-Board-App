@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const signOptions = ["Sign up", "Log In"]
+const signOptions = ["Sign up", "Log In","My Account"]
 
 export function Navbar() {
     const [dropdownOpen, setDropdownOpen] = useState(false)

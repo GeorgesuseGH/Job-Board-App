@@ -38,16 +38,16 @@ Now you need to create your own data-base :
  . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
   
  . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT);
- . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT);
+
   
-  . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255));
-  . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255));
+  . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255), post_count INT);
+
   
   . CREATE TABLE job_offers(job_details TEXT,job_id SERIAL PRIMARY KEY,phone VARCHAR(100),email VARCHAR(100),lvl TEXT,employment TEXT,versat TEXT,ft TEXT,loc TEXT,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE);
-  . CREATE TABLE job_offers(job_details TEXT,job_id SERIAL PRIMARY KEY,phone VARCHAR(100),email VARCHAR(100),lvl TEXT,employment TEXT,versat TEXT,ft TEXT,loc TEXT,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE);
+
   
   . CREATE TABLE password_resets(id SERIAL PRIMARY KEY,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE,token_hash VARCHAR(200),expires_at TIMESTAMP WITHOUT TIME ZONE,used BOOLEAN);
-  . CREATE TABLE password_resets(id SERIAL PRIMARY KEY,user_id INT  REFERENCES users(user_id) ON DELETE CASCADE,token_hash VARCHAR(200),expires_at TIMESTAMP WITHOUT TIME ZONE,used BOOLEAN);
+
 
 
 
