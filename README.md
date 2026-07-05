@@ -33,11 +33,10 @@ Now you need to create your own data-base :
  . \c job_board
 
  . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
- . \c job_board
 
  . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
   
- . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT);
+ . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT,applications_count INT,studies TEXT,experience TEXT);
 
   
   . CREATE TABLE employer_info(first_name TEXT,last_name TEXT,business_email VARCHAR(100) PRIMARY KEY,company VARCHAR(100),phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE,country TEXT,imgURL VARCHAR(255), post_count INT);
@@ -69,9 +68,8 @@ export const pool = new Pool({
 
 
 Fill the keys with your own info , also to get the port that you are using you need to run "SHOW port ;" after being logged in to postgres.
-Fill the keys with your own info , also to get the port that you are using you need to run "SHOW port ;" after being logged in to postgres.
 
-Then you will need to add another important file ,the  .env in your back_end and it should contain:
+
 Then you will need to add another important file ,the  .env in your back_end and it should contain:
 
    MY_SECRET="EXAMPLE"

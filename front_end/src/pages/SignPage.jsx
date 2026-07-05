@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const studiesLevels=[
+    'Associate degree',
+'Bachelors degree',
+'Masters degree',
+'Doctoral degree','other'
+]
 const countries = [
     { country: "Lebanon", code: "+961" },
     { country: "United States", code: "+1" },
@@ -41,6 +47,8 @@ export function SignPage() {
     const [company, setCompany] = useState("")
     const [image, setImage] = useState('')
     const [birthdate, setBirthdate] = useState("")
+    const [exp,setExp]=useState('')
+    const [studies,setStudies]=useState("")
     const navigate=useNavigate()
     const postData = (url, data) => {
         axios.post(url, data, { withCredentials: true }).then(res => {
@@ -72,6 +80,8 @@ formData.append("image",image)
 
 }
 else{
+    formData.append("experience",exp)
+    formData.append("studies",studies)
 formData.append("birthdate",birthdate)
 }
 axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true })
@@ -138,7 +148,28 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
                         <label hidden={isemployer}>Birthdate : <input className=" rounded-md border-3" type="date" value={birthdate} required={!isemployer} onChange={(e) => {
                             setBirthdate(e.target.value)
                         }} ></input>
-                        </label></div>
+                        </label>
+                        
+                        <label hidden={isemployer}>Experience :<textarea required minlength="40"
+  maxlength="350" type="text" className="border-1 rounded-xl self-center" value={exp} placeholder="In need of an" onChange={e => {
+                setExp(e.target.value)
+              }}></textarea></label>
+              <label className="flex flex-row items-center justify-center">Level of degree:
+                <select onChange={e=>{
+                    setStudies(e.target.values)
+                }}>
+<option value="" disabled>Select a Level degree</option>
+                
+               { studiesLevels.map(level=>
+                   <option key={level}>{level}</option>
+                )}</select>
+              
+              </label>  
+                   {studies=="other"&&<label>Other type of studies <input type="text" onChange={(e)=>{
+                    setStudies(e.target.value)
+                   }}></input></label>
+                   }
+                        </div>
                     <div className="flex justify-center my-10">
                         <button type="submit" className="bg-gradient-to-tl from-primary via-secondary to-primary border-2 rounded-md w-30 justify-center hover:shadow-blue-300 hover:shadow-xl hover:font-semibold">Submit</button>
                     </div> </form>

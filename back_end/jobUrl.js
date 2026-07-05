@@ -89,10 +89,10 @@ catch(err){
 }
 })
 
-jobRoute.get("/my-applications",cookieAuth,async(req,res)=>{
+jobRoute.get("/candidates",cookieAuth,async(req,res)=>{
   const {user_id}=req.user
   try{
-    const checkApplies=await pool.query("SELECT * FROM job_applies WHERE user_id = $1",[user_id])
+    const checkApplies=await pool.query("SELECT * FROM candidate_info WHERE user_id = $1",[user_id])
     if(checkApplies.rowCount>0){
       res.json({success:true,state:"sending data",data:checkApplies.rows})
     }

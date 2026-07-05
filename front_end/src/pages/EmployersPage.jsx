@@ -198,12 +198,12 @@ export function EmployersPage() {
                   return <option key={emp}>{emp}</option>
                 })}
               </select>
-              <label className="flex flex-row justify-center items-center">Job Details :<textarea required minlength="10"
+              <label className="flex flex-row justify-center items-center">Job Details :<textarea required 
   maxlength="350" type="text" className="border-1 rounded-xl self-center" value={jobDetails} minLength="20" placeholder="In need of an" onChange={e => {
                 setJobDetails(e.target.value)
               }}></textarea></label>
 
-              <label className="flex flex-row justify-center items-center">Email :<input required minlength="10"
+              <label className="flex flex-row justify-center items-center">Email :<input required 
   maxlength="30" type="email" className="border-1 rounded-xl self-center" value={email} minLength="12" placeholder="email@gmail.com" onChange={e => {
                 setEmail(e.target.value)
               }}></input></label>

@@ -58,7 +58,7 @@ route.post("/api/log-in", async (req, res) => {
 
 
 route.post("/api/signup",upload.single("image"), async (req, res) => {
-    const { isemployer, email, pass, firstName, lastName, phone, country} = req.body
+    const { isemployer, email, pass, firstName, lastName, phone, country } = req.body
     //I need to store passwords but hashed using bcrypt.hash()//
       const imgUrl = req.file
       ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
@@ -80,10 +80,10 @@ route.post("/api/signup",upload.single("image"), async (req, res) => {
 
 
                     if (isemployer === "false") {
-                        const { birthdate } = req.body
-                        const insertTable = await pool.query('INSERT INTO candidate_info(first_name,last_name,birthdate,country,email,phone,user_id) VALUES($1,$2,$3,$4,$5,$6,$7)', [firstName, lastName, birthdate, country, email, phone, insertInDb.rows[0].user_id])
+                        const { birthdate ,experience,studies} = req.body
+                        const insertTable = await pool.query('INSERT INTO candidate_info(first_name,last_name,birthdate,country,email,phone,user_id,experience,studies) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)', [firstName, lastName, birthdate, country, email, phone, insertInDb.rows[0].user_id,experience,studies])
                         if (insertTable.rowCount > 0) {
-                            return res.redirect("/login")
+                            return res.json({success:true,state:"Redirecting so you log in."})
                         }
                         else{
                 const removeUser=await pool.query("DELETE FROM users WHERE user_id =  $1 ",[ insertInDb.rows[0].user_id])
