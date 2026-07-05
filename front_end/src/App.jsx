@@ -32,7 +32,7 @@ export function App() {
   <Route path="/reset-pass" element={<ResetPass/>}/>
   <Route path="/reset-password" element={<SetNewPass/>}/>
   <Route path="/error" element={<ErrorPage/>}></Route>
-  <Route path="/my-account" element={<Mypage/>}></Route>
+  
       </Routes>
       <Footer></Footer>
       </AuthProvider>

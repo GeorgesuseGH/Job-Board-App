@@ -47,17 +47,11 @@ export function SignPage() {
     const [company, setCompany] = useState("")
     const [image, setImage] = useState('')
     const [birthdate, setBirthdate] = useState("")
-    const [exp,setExp]=useState('')
+    const [experience,setExperience]=useState('')
+    const [customStudies, setCustomStudies] = useState("")
     const [studies,setStudies]=useState("")
     const navigate=useNavigate()
-    const postData = (url, data) => {
-        axios.post(url, data, { withCredentials: true }).then(res => {
-            if (res) {
-               navigate("/log-in",{replace:true})
-            }
-        }).catch(err => console.log(err))
-    }
-const formData=new FormData()
+
 
     return (<>
         <div className=" my-40 flex flex-col gap-10 items-center justify-center shadow-xl shadow-2xl border-2 w-[80%] h-[80%] justify-self-center">
@@ -65,6 +59,8 @@ const formData=new FormData()
             <div>
                 <form onSubmit={(e) => {
                     e.preventDefault();
+                    const formData=new FormData()
+
                     formData.append("email",email)
                     formData.append("pass",pass)
                      formData.append("firstName",firstName)
@@ -80,63 +76,83 @@ formData.append("image",image)
 
 }
 else{
-    formData.append("experience",exp)
-    formData.append("studies",studies)
+    formData.append("experience",experience)
+    if(studies=="other"){
+        formData.append("studies",customStudies)
+    }
+    else{
+         formData.append("studies",studies)
+    }
+   
 formData.append("birthdate",birthdate)
 }
-axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true })
-               navigate("/log-in",{replace:true})
+axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true }).then(res=>{
+    if(res.data.success){
+        navigate("/log-in",{replace:true})
+    }
+    else{
+      navigate("/error",{replace:true})
+    }
+}).catch(err=>{
+          navigate("/error",{replace:true})
+
+})
+              
 
                 }}>
                     <div className="my-10 border-red-300 grid sm:grid-cols-1 md:grid-cols-2  gap-10 font-sans">
 
-                        <label >Email : <input minlength="10"
-  maxlength="30" className=" rounded-md border-3 " required type="email" value={email} onChange={(e) => {
+                        <label >Email : <input minLength="10"
+  maxLength="30" className=" rounded-md border-3 " required type="email" value={email} onChange={(e) => {
 
                             setEmail(e.target.value)
                         }}></input></label>
-                        <label>Password : <input minlength="10"
-  maxlength="18" className=" rounded-md border-3 " required type="password" value={pass} onChange={(e) => {
+                        <label>Password : <input minLength="10"
+  maxLength="18" className=" rounded-md border-3 " required type="password" value={pass} onChange={(e) => {
 
 
                             setPass(e.target.value)
                         }}></input></label>
-                        <label>First-name : <input minlength="2"
-  maxlength="50" className=" rounded-md border-3 " type="text" value={firstName} required onChange={(e) => {
+                        <label>First-name : <input minLength="2"
+  maxLength="50" className=" rounded-md border-3 " type="text" value={firstName} required onChange={(e) => {
 
                             setFirstName(e.target.value)
                         }}></input></label>
-                        <label>Last-name : <input minlength="2"
-  maxlength="50" className=" rounded-md border-3 " type="text" value={lastName} required onChange={(e) => {
+                        <label>Last-name : <input minLength="2"
+  maxLength="50" className=" rounded-md border-3 " type="text" value={lastName} required onChange={(e) => {
 
 
                             setLastName(e.target.value)
                         }}></input></label>
                         <label>
-                            Country : <select className="border-2 rounded-md" required onChange={(e) => setCountry(e.target.value)} value={country}>
+                            Country : <select required className="border-2 rounded-md" required onChange={(e) => setCountry(e.target.value)} value={country}>
 
                                 <option value="" disabled>Select a country</option>
                                 {countries.map(country => {
                                     return <option key={country.country}>{country.country}</option>
                                 })}</select>
                         </label>
-                        <label className="">Phone : <select className="border-2 rounded-md" required onChange={(e) => setPhoneCode(e.target.value)} value={phoneCode}>
+                        <label className="">Phone : <select required className="border-2 rounded-md" required onChange={(e) => setPhoneCode(e.target.value)} value={phoneCode}>
+                            <option disabled value=""></option>
                             {countries.map(country => {
                                 return <option key={country.country}>{country.code}</option>
-                            })}</select><input minlength="5"
-  maxlength="20" className=" rounded-md border-3 " type="number" value={phone} required onChange={(e) => {
+                            })}</select><input minLength="5"
+  maxLength="20" className=" rounded-md border-3 " type="number" value={phone} required onChange={(e) => {
 
 
                                 setPhone(e.target.value)
                             }}></input></label>
 
                         <label>Signing up as Employer ? <input className=" rounded-md border-3 " type="checkbox" checked={isemployer} onChange={(e) => {
-                            setBirthdate("")
-                            setCompany("")
-                            setIsemployer(!isemployer)
+                           setBirthdate("")
+  setCompany("")
+  setImage('')
+  setExperience('')
+  setStudies('')
+  setIsemployer(!isemployer)
                         }}></input></label>
-                        <label hidden={!isemployer}>Company :<input minlength="2"
-  maxlength="50" className=" rounded-md border-3" type="text" value={company} required={isemployer} onChange={(e) => {
+                        <label hidden={!isemployer}>Company :<input minLength="2"
+  maxLength="50" className=" rounded-md border-3" type="text" value={company} required={isemployer} onChange={(e) => {
                             setCompany(e.target.value)
                         }} ></input>
                         </label>
@@ -150,13 +166,13 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
                         }} ></input>
                         </label>
                         
-                        <label hidden={isemployer}>Experience :<textarea required minlength="40"
-  maxlength="350" type="text" className="border-1 rounded-xl self-center" value={exp} placeholder="In need of an" onChange={e => {
-                setExp(e.target.value)
+                        <label hidden={isemployer} className="flex flex-row gap-2 items-center justify-center">Experience :<textarea required minLength="40"
+  maxLength="350" type="text" className="border-1 rounded-xl self-center" value={experience} placeholder="In need of an" onChange={e => {
+                setExperience(e.target.value)
               }}></textarea></label>
               <label className="flex flex-row items-center justify-center">Level of degree:
-                <select onChange={e=>{
-                    setStudies(e.target.values)
+                <select value={studies} required onChange={e=>{
+                    setStudies(e.target.value)
                 }}>
 <option value="" disabled>Select a Level degree</option>
                 
@@ -166,7 +182,7 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
               
               </label>  
                    {studies=="other"&&<label>Other type of studies <input type="text" onChange={(e)=>{
-                    setStudies(e.target.value)
+                    setCustomStudies(e.target.value)
                    }}></input></label>
                    }
                         </div>
