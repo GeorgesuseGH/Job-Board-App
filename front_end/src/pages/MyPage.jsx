@@ -7,7 +7,8 @@ import { JobCard } from "../components/jobCard"
 
 
 const Employer=(info)=>{
-  const [myPosts,setMyPosts]=useState('')
+  const navigate=useNavigate()
+  const [myPosts,setMyPosts]=useState(null)
   useEffect(()=>{
      axios.get("http://localhost:5000/my-offers").then(res=>{
         if(res.data&&res.success){
@@ -24,7 +25,7 @@ const Employer=(info)=>{
   
 return (
   <div className="flex flex-col justify-center items-center">
-    <img src={imgurl} className="rounded-full m-5"></img>
+    <img src={imgurl} alt={`${first_name} ${last_name}`} className="rounded-full m-5"></img>
 <h2 className="text-xl shadow-xl m-5">{first_name} {last_name}</h2>
 <h3>Company :{company}</h3>
 <h4>
@@ -44,6 +45,7 @@ return (
 
 
 const Candidate=(info)=>{
+  const navigate=useNavigate()
    const {first_name,last_name,email,phone,applications_count,experience,studies,birthdate}=info
 
   return( <div className="flex flex-col justify-center items-center">
@@ -54,7 +56,7 @@ const Candidate=(info)=>{
  Birthday : {birthdate}
 </h4>
 <h4>Applications count : {applications_count}</h4>
-<p className="grid md:grid-cols-2 sm:gird-cols-1 justify-center items-center"><stron>Experience :</stron>
+<p className="grid md:grid-cols-2 sm:gird-cols-1 justify-center items-center"><strong>Experience :</strong>
 {experience}
 </p>
   </div>)
@@ -65,11 +67,11 @@ export const MyPage=()=>{
 const [myInfo,setMyInfo]=useState([])
 const {user,logout,loading,checkAuth}=useAuth()
 const navigate=useNavigate()
-const {user_id,isemployer}=user
+const {user_id,isemployer}=user||{}
 
     useEffect(()=>{if(isemployer){
          axios.get("http://localhost:5000/employer").then(res=>{
-        if(res.data&&res.success){
+        if(res.data&&res.data.success){
        setMyInfo(res.data)
         }
         else{
@@ -102,7 +104,7 @@ const {user_id,isemployer}=user
     return(
         <div className="flex flex-col justify-center items-center">
             <h1 className="text-red-700 text-2xl m-10">My Page</h1>
- {loading?isemployer?<Employer {...myInfo}/>:<Candidate {...myInfo}/>:<p>Still Loading.....</p>}
+ {!loading?isemployer?<Employer {...myInfo}/>:<Candidate {...myInfo}/>:<p>Still Loading.....</p>}
         </div>
     )
 

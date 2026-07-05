@@ -7,6 +7,7 @@ import { AboutPage } from './pages/AboutPage.jsx'
 import { FaqsPage } from './pages/FaqsPage.jsx'
 import { SignPage } from './pages/SignPage.jsx'
 import { LogInPage } from './pages/LogInPage.jsx'
+import { MyPage } from './pages/MyPage.jsx'
 import { Footer } from './components/footer.jsx'
 import { ResetPass,SetNewPass } from './pages/Reset-pass.jsx'
 import { AuthProvider } from './components/authProvider'
@@ -31,6 +32,7 @@ export function App() {
   <Route path="/reset-pass" element={<ResetPass/>}/>
   <Route path="/reset-password" element={<SetNewPass/>}/>
   <Route path="/error" element={<ErrorPage/>}></Route>
+  <Route path="/my-account" element={<Mypage/>}></Route>
       </Routes>
       <Footer></Footer>
       </AuthProvider>
