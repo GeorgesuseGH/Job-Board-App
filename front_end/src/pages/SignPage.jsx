@@ -77,7 +77,7 @@ formData.append("image",image)
 }
 else{
     formData.append("experience",experience)
-    if(studies=="other"){
+    if(studies==="other"){
         formData.append("studies",customStudies)
     }
     else{
@@ -103,47 +103,47 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
                     <div className="my-10 border-red-300 grid sm:grid-cols-1 md:grid-cols-2  gap-10 font-sans">
 
                         <label >Email : <input minLength="10"
-  maxLength="30" className=" rounded-md border-3 " required type="email" value={email} onChange={(e) => {
+  maxLength="30" className="p-3 rounded-md border-3 " required type="email" value={email} onChange={(e) => {
 
                             setEmail(e.target.value)
                         }}></input></label>
                         <label>Password : <input minLength="10"
-  maxLength="18" className=" rounded-md border-3 " required type="password" value={pass} onChange={(e) => {
+  maxLength="18" className="p-3  rounded-md border-3 " required type="password" value={pass} onChange={(e) => {
 
 
                             setPass(e.target.value)
                         }}></input></label>
                         <label>First-name : <input minLength="2"
-  maxLength="50" className=" rounded-md border-3 " type="text" value={firstName} required onChange={(e) => {
+  maxLength="50" className="p-3  rounded-md border-3 " type="text" value={firstName} required onChange={(e) => {
 
                             setFirstName(e.target.value)
                         }}></input></label>
                         <label>Last-name : <input minLength="2"
-  maxLength="50" className=" rounded-md border-3 " type="text" value={lastName} required onChange={(e) => {
+  maxLength="50" className="p-3  rounded-md border-3 " type="text" value={lastName} required onChange={(e) => {
 
 
                             setLastName(e.target.value)
                         }}></input></label>
                         <label>
-                            Country : <select required className="border-2 rounded-md" required onChange={(e) => setCountry(e.target.value)} value={country}>
+                            Country : <select required className="border-2 rounded-md p-3 " required onChange={(e) => setCountry(e.target.value)} value={country}>
 
                                 <option value="" disabled>Select a country</option>
                                 {countries.map(country => {
                                     return <option key={country.country}>{country.country}</option>
                                 })}</select>
                         </label>
-                        <label className="">Phone : <select required className="border-2 rounded-md" required onChange={(e) => setPhoneCode(e.target.value)} value={phoneCode}>
-                            <option disabled value=""></option>
+                        <label className="">Phone : <select required className="border-2 rounded-md p-3 " required onChange={(e) => setPhoneCode(e.target.value)} value={phoneCode}>
+                            <option disabled value="">Select</option>
                             {countries.map(country => {
                                 return <option key={country.country}>{country.code}</option>
                             })}</select><input minLength="5"
-  maxLength="20" className=" rounded-md border-3 " type="number" value={phone} required onChange={(e) => {
+  maxLength="20" className=" rounded-md border-3 p-3 " type="number" value={phone} required onChange={(e) => {
 
 
                                 setPhone(e.target.value)
                             }}></input></label>
 
-                        <label>Signing up as Employer ? <input className=" rounded-md border-3 " type="checkbox" checked={isemployer} onChange={(e) => {
+                        <label>Signing up as Employer ? <input className=" rounded-md border-3 p-3 " type="checkbox" checked={isemployer} onChange={(e) => {
                            setBirthdate("")
   setCompany("")
   setImage('')
@@ -152,42 +152,42 @@ axios.post("http://localhost:5000/api/signup",formData, { withCredentials: true 
   setIsemployer(!isemployer)
                         }}></input></label>
                         <label hidden={!isemployer}>Company :<input minLength="2"
-  maxLength="50" className=" rounded-md border-3" type="text" value={company} required={isemployer} onChange={(e) => {
+  maxLength="50" className="p-3  rounded-md border-3" type="text" value={company} required={isemployer} onChange={(e) => {
                             setCompany(e.target.value)
                         }} ></input>
                         </label>
-                        <label hidden={!isemployer}>Profile photo :<input className=" rounded-md border-3" type="file"  required={isemployer} onChange={(e) => {
+                        <label hidden={!isemployer}>Profile photo :<input className="p-3  rounded-md border-3" type="file"  required={isemployer} onChange={(e) => {
                             setImage(e.target.files[0])
 
                         }} placeholder="Choose File" ></input>
                         </label>
-                        <label hidden={isemployer}>Birthdate : <input className=" rounded-md border-3" type="date" value={birthdate} required={!isemployer} onChange={(e) => {
+                        <label hidden={isemployer}>Birthdate : <input className="p-3  rounded-md border-3" type="date" value={birthdate} required={!isemployer} onChange={(e) => {
                             setBirthdate(e.target.value)
                         }} ></input>
                         </label>
                         
-                        <label hidden={isemployer} className="flex flex-row gap-2 items-center justify-center">Experience :<textarea required minLength="40"
-  maxLength="350" type="text" className="border-1 rounded-xl self-center" value={experience} placeholder="In need of an" onChange={e => {
+                        <label hidden={isemployer} className="flex flex-row gap-2 items-center justify-center">Experience :<textarea  minLength="40"
+  maxLength="350"  className="border-1 rounded-xl p-3 " required={!isemployer} value={experience} placeholder="Worked as a DevOps in ..." onChange={e => {
                 setExperience(e.target.value)
               }}></textarea></label>
-              <label className="flex flex-row items-center justify-center">Level of degree:
-                <select value={studies} required onChange={e=>{
+              <label className="flex flex-row items-center justify-center" hidden={isemployer}>Level of degree:
+                <select value={studies} required={!isemployer} onChange={e=>{
                     setStudies(e.target.value)
-                }}>
-<option value="" disabled>Select a Level degree</option>
+                }} className="border-2 rounded-xl p-3 ">
+<option value="" disabled >Select a Level degree</option>
                 
                { studiesLevels.map(level=>
                    <option key={level}>{level}</option>
                 )}</select>
               
               </label>  
-                   {studies=="other"&&<label>Other type of studies <input type="text" onChange={(e)=>{
+                   {studies=="other"&&<label hidden={isemployer}>Other type of studies <input required={!isemployer}   value={customStudies} type="text" onChange={(e)=>{
                     setCustomStudies(e.target.value)
                    }}></input></label>
                    }
                         </div>
                     <div className="flex justify-center my-10">
-                        <button type="submit" className="bg-gradient-to-tl from-primary via-secondary to-primary border-2 rounded-md w-30 justify-center hover:shadow-blue-300 hover:shadow-xl hover:font-semibold">Submit</button>
+                        <button type="submit" className=" bg-gradient-to-tl from-primary via-secondary to-primary border-2 rounded-md w-30 justify-center hover:shadow-blue-300 hover:shadow-xl hover:font-semibold">Submit</button>
                     </div> </form>
 
             </div>

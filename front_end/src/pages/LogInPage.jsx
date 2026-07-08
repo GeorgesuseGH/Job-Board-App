@@ -49,11 +49,11 @@ export function LogInPage() {
                 e.preventDefault();
                 postData("http://localhost:5000/api/log-in", { email, pass })
 
-            }}><label className="w-100%">Email: <input required autoComplete="email" className=" rounded-md border-3 " type="email" value={email} onChange={(e) => {
+            }}><label className="w-100%">Email: <input required autoComplete="email" className=" rounded-md border-3 p-3 " type="email" value={email} onChange={(e) => {
 
                 setEmail(e.target.value)
             }}></input></label>
-                <label>Password: <input  autoComplete="current-password"  className=" rounded-md border-3 " type="password" value={pass} onChange={(e) => {
+                <label>Password: <input  autoComplete="current-password"  className=" rounded-md border-3 p-3 " type="password" value={pass} onChange={(e) => {
                     
 
                     setPass(e.target.value)

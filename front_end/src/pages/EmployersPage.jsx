@@ -137,15 +137,16 @@ export function EmployersPage() {
         isemployer ? (<div className="flex flex-col gap-4 items-center justify-center">
           <h2 className="text-2xl font-semibold text-red-700 m-20">Post a job Offer :</h2>
 
-          <form className='rounded-xl border-2 shadow-2xl w-auto h-auto mx-10' onSubmit={(e) => {
+          <form className='rounded-xl border-2 shadow-2xl w-auto h-auto mx-10' onSubmit={ (e) => {
             e.preventDefault();
 
-            axios.post("http://localhost:5000/jobs",{jobDetails,phone,email,lvl,employment,vers,ft,loc,user_id}, { withCredentials: true }).then(res=>{
+        axios.post("http://localhost:5000/jobs",{jobDetails,phone,email,lvl,employment,vers,ft,loc,user_id}, { withCredentials: true }).then(res=>{
                 console.log(res)
 
                 if(res.data.success==false){
                        navigate("/error",{replace:true})
                 }
+                
             }).catch(err=>{console.log(err)
               navigate("/error",{replace:true})
             })
@@ -158,7 +159,9 @@ export function EmployersPage() {
             setft("")
             setEmployments("")
             e.target.reset
-          }}>
+          }
+          
+         }>
             <div className='grid sm:grid-cols-3 md:grid-cols-4 grid-rows-2 gap-10 items-center justify-center my-10'>
               <select required className='bg-white rounded-xl border-black shadow-lg max-h-20 ' id="location" value={loc} onChange={(e) => setLoc(e.target.value)}>
                <option value="" disabled>Select a Country</option>
@@ -199,16 +202,16 @@ export function EmployersPage() {
                 })}
               </select>
               <label className="flex flex-row justify-center items-center">Job Details :<textarea required 
-  maxlength="350" type="text" className="border-1 rounded-xl self-center" value={jobDetails} minLength="20" placeholder="In need of an" onChange={e => {
+  maxlength="350" type="text" className="border-1 p-3  rounded-xl self-center" value={jobDetails} minLength="20" placeholder="In need of an" onChange={e => {
                 setJobDetails(e.target.value)
               }}></textarea></label>
 
               <label className="flex flex-row justify-center items-center">Email :<input required 
-  maxlength="30" type="email" className="border-1 rounded-xl self-center" value={email} minLength="12" placeholder="email@gmail.com" onChange={e => {
+  maxlength="30" type="email" className="border-1 rounded-xl p-3  self-center" value={email} minLength="12" placeholder="email@gmail.com" onChange={e => {
                 setEmail(e.target.value)
               }}></input></label>
               <label className="flex flex-row justify-center items-center">Phone :<input required minlength="5"
-  maxlength="20" type="number" className="border-1 rounded-xl self-center" value={phone} placeholder="01788999" onChange={e => {
+  maxlength="20" type="number" className="border-1 rounded-xl self-center p-3 " value={phone} placeholder="01788999" onChange={e => {
                 setPhone(e.target.value)
               }}></input></label>
 

@@ -11,10 +11,10 @@ jobRoute.get("/jobs", async (req, res) => {
   const dbReq = await pool.query("SELECT * FROM job_offers ")
   try {
     if (dbReq.rows.length > 0) {
-      res.send(dbReq.rows)
+      return res.send(dbReq.rows)
     }
     else {
-      res.json({ success: false, state: "couldnt get anything from the data" })
+    return  res.json({ success: false, state: "couldnt get anything from the data" })
     }
   }
   catch (err) {
@@ -53,8 +53,9 @@ jobRoute.post("/jobs", cookieAuth, async (req, res) => {
   }
 })
 
-jobRoute.post("/remove-job", cookieAuth, async (req, res) => {
-  const { user_id, job_id } = req.user
+jobRoute.delete("/job/:job_id", cookieAuth, async (req, res) => {
+  const { user_id } = req.user
+  const {job_id}=req.params
   try {
 
     if (user_id && job_id) {
@@ -72,8 +73,8 @@ jobRoute.post("/remove-job", cookieAuth, async (req, res) => {
   }
 })
 
-jobRoute.get("/my-offers", cookieAuth, async (req, res) => {
-  const { user_id } = req.user
+jobRoute.get("/my-offers",cookieAuth,  async (req, res) => {
+const { user_id } = req.user
   try {
     const checkPosts = await pool.query("SELECT * FROM job_offers WHERE user_id = $1", [user_id])
     if (checkPosts.rowCount > 0) {
@@ -93,7 +94,7 @@ jobRoute.get("/candidates", cookieAuth, async (req, res) => {
   try {
     const checkApplies = await pool.query("SELECT * FROM candidate_info WHERE user_id = $1", [user_id])
     if (checkApplies.rowCount > 0) {
-      return res.json({ success: true, state: "sending data", data: checkApplies.rows })
+      return res.json({ success: true, state: "sending data", data: checkApplies.rows[0] })
     }
     else {
       return res.json({ success: false, state: "Seems like there is no applications from this user ." })
@@ -104,22 +105,28 @@ jobRoute.get("/candidates", cookieAuth, async (req, res) => {
   }
 })
 
+jobRoute.put("/add-applier",cookieAuth,async (req,res)=>{
+const {user_id}=req.user
+  const {job_id}=req.body
+  try{if(user_id&&job_id){
 
-jobRoute.put("/increment-app-count", cookieAuth, async (req, res) => {
+ 
+              const addApplier=await pool.query("UPDATE job_offers SET appliers = array_append(appliers,$1) WHERE job_id = $2 ",[user_id,job_id])
 
-  const { user_id } = req.user
+    if(addApplier.rowCount>0){
+     
 
-  try {
-
-    const incApplies = await pool.query("UPDATE candidate_info SET applications_count = applications_count + 1 WHERE user_id = $1 ", [user_id])
-    if (incApplies.rowCount > 0) {
-      return res.json({ success: true, state: "Update was a success." })
+       return res.json({success:true,state:"user added as an applier"})
     }
-    else {
-      return res.json({ success: false, state: "Failled" })
+    else{
+       return res.json({success:false,state:"error"})
+
     }
-  }
-  catch (err) {
-    return res.json({ success: false, state: err })
+  } 
+else{
+   return res.json({success:false,state:"error"})
+}}
+  catch(err){
+    return res.json({success:false,state:err})
   }
 })

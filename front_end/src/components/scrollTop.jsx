@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
-// this is just a sideEffect component
+// this is just a sideEffect component , it will help scroll to the top of the page each time the user navigates to another page
 
 export const ScrollTop=()=>{
     const {pathname}=useLocation()

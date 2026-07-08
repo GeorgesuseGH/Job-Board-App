@@ -96,7 +96,7 @@ route.post("/api/signup",upload.single("image"), async (req, res) => {
                         const { company } = req.body
                         const insertTable = await pool.query('INSERT INTO employer_info(first_name,last_name,company,country,business_email,phone,user_id,imgurl) VALUES($1,$2,$3,$4,$5,$6,$7,$8)', [firstName, lastName, company, country, email, phone, insertInDb.rows[0].user_id,imgUrl])
                         if (insertTable.rowCount > 0) {
-                            return res.send("success ,redirecting to the login page")
+                            return res.json({success:true,state:"redirecting"})
                         }
                          else{
                 const removeUser=await pool.query("DELETE FROM users WHERE user_id =  $1 ",[ insertInDb.rows[0].user_id])

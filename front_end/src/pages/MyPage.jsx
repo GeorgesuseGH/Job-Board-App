@@ -11,8 +11,8 @@ const Employer=(info)=>{
   const [myPosts,setMyPosts]=useState(null)
   useEffect(()=>{
      axios.get("http://localhost:5000/my-offers").then(res=>{
-        if(res.data&&res.success){
-       setMyPosts(res.data)
+        if(res.data&&res.data.success){
+       setMyPosts(res.data.data)
         }
          else{
          navigate("/error",{replace:true})
@@ -24,21 +24,27 @@ const Employer=(info)=>{
  const {first_name,last_name,company,business_email,phone,imgurl,post_count}=info
   
 return (
-  <div className="flex flex-col justify-center items-center">
+  <div className="flex flex-col justify-center items-center rounded-xl shadow-2xl">
     <img src={imgurl} alt={`${first_name} ${last_name}`} className="rounded-full m-5"></img>
 <h2 className="text-xl shadow-xl m-5">{first_name} {last_name}</h2>
 <h3>Company :{company}</h3>
 <h4>
  Business Email : {business_email}
 </h4>
-<h4>Post count : {post_count}</h4>
-<div className="grid md:grid-cols-2 sm:gird-cols-1 justify-center items-center">
-{
-  myPosts ? myPosts.map(post => (
-    <JobCard key={post.job_id} {...post} />
-  )) : <p>Still fetching...</p>
-}
-</div>
+<h4>My Posts :</h4>
+{!myPosts ? (
+  <p>Still fetching...</p>
+) : myPosts.length === 1 ? (
+  <div className="flex flex-row justify-center items-center sm:flex-col">
+    <JobCard key={myPosts[0].job_id} {...myPosts[0]} />
+  </div>
+) : (
+  <div className="grid md:grid-cols-2 sm:grid-cols-1 items-center justify-center">
+    {myPosts.map(post => (
+      <JobCard key={post.job_id} {...post} />
+    ))}
+  </div>
+)}
   </div>
 )
 }
@@ -48,19 +54,19 @@ const Candidate=(info)=>{
   const navigate=useNavigate()
    const {first_name,last_name,email,phone,applications_count,experience,studies,birthdate}=info
 
-  return( <div className="flex flex-col justify-center items-center">
+  return( <div className="flex flex-col justify-center items-center gap-7 m-10">
    
 <h2 className="text-xl shadow-xl m-5">{first_name} {last_name}</h2>
 <h3>Studies :{studies}</h3>
 <h4>
  Birthday : {birthdate}
 </h4>
-<h4>Applications count : {applications_count}</h4>
-<p className="grid md:grid-cols-2 sm:gird-cols-1 justify-center items-center"><strong>Experience :</strong>
+<p className="grid md:grid-cols-2 sm:gird-cols-1 gap-4 "><span>Experience :</span>
 {experience}
 </p>
   </div>)
 }
+
 export const MyPage=()=>{
 
 
@@ -69,10 +75,10 @@ const {user,logout,loading,checkAuth}=useAuth()
 const navigate=useNavigate()
 const {user_id,isemployer}=user||{}
 
-    useEffect(()=>{if(isemployer){
+    useEffect(()=>{if(user_id||isemployer!=undefined){if(isemployer){
          axios.get("http://localhost:5000/employer").then(res=>{
         if(res.data&&res.data.success){
-       setMyInfo(res.data)
+       setMyInfo(res.data.data)
         }
         else{
          navigate("/error",{replace:true})
@@ -83,8 +89,8 @@ const {user_id,isemployer}=user||{}
     }
     else{
  axios.get("http://localhost:5000/candidates").then(res=>{
-        if(res.data&&res.success){
-       setMyInfo(res.data)
+        if(res.data&&res.data.success){
+       setMyInfo(res.data.data)
         }
          else{
          navigate("/error",{replace:true})
@@ -92,6 +98,8 @@ const {user_id,isemployer}=user||{}
       }  ).catch(err=>{
         navigate("/error",{replace:true})
       })
+    }}else{
+       navigate("/log-in",{replace:true})
     }
      
     },[])
