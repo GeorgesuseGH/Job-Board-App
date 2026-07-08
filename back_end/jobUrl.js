@@ -76,32 +76,60 @@ jobRoute.delete("/job/:job_id", cookieAuth, async (req, res) => {
 jobRoute.get("/my-offers",cookieAuth,  async (req, res) => {
 const { user_id } = req.user
   try {
+
     const checkPosts = await pool.query("SELECT * FROM job_offers WHERE user_id = $1", [user_id])
+
     if (checkPosts.rowCount > 0) {
+    
       return res.json({ success: true, state: "sending data", data: checkPosts.rows })
+    
     }
+
+    
     else {
+
       return res.json({ success: false, state: "Seems like there is no job offers from this user ." })
+    
     }
+
   }
+
   catch (err) {
-    return res.json({ success: false, state: err })
+  
+    return res.json({ success: false, state: "error" })
+  
   }
+
 })
 
-jobRoute.get("/candidates", cookieAuth, async (req, res) => {
+
+ jobRoute.get("/candidates", cookieAuth, async (req, res) => {
+
   const { user_id } = req.user
+  
   try {
+  
     const checkApplies = await pool.query("SELECT * FROM candidate_info WHERE user_id = $1", [user_id])
+
+    
     if (checkApplies.rowCount > 0) {
+  
       return res.json({ success: true, state: "sending data", data: checkApplies.rows[0] })
+  
     }
+  
     else {
+  
       return res.json({ success: false, state: "Seems like there is no applications from this user ." })
+  
     }
+  
   }
+
   catch (err) {
+
     return res.json({ success: false, state: err })
+
   }
 })
 

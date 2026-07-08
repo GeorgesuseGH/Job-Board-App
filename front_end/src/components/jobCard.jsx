@@ -3,6 +3,7 @@ import axios from "axios"
 import { useAuth } from "./authProvider"
 import { useNavigate } from "react-router-dom"
 export const JobCard = (obj) => {
+    
     const { job_details, phone, email, lvl, appliers, job_id, user_id } = obj
     const [applied, setApplied] = useState(false)
     const [deleted, setDeleted] = useState(false)
@@ -17,7 +18,9 @@ export const JobCard = (obj) => {
             setApplied(appliers.some(applier => applier == user?.user_id))
         }
         if (user?.user_id == user_id) {
+            
             setIsPoster(true)
+
         }
     }, [])
 
