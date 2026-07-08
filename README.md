@@ -16,9 +16,9 @@ First of you need to have atleast close versions of these :
 
 - For the rest you can just run npm i  in the terminal in each folder (front_end and back_end )  after entering these (using git bash) :
  
- .git clone https://github.com/GeorgesuseGH/Job-Board-App.git
+ . git clone https://github.com/GeorgesuseGH/Job-Board-App.git
 
- .cd Job-Board-App
+ . cd Job-Board-App
 
  and all the dependencies will be installed .
 
@@ -34,7 +34,6 @@ Now you need to create your own data-base :
 
  . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
 
- . CREATE TABLE users(user_id SERIAL PRIMARY KEY,user_email VARCHAR(100) UNIQUE,password_hash TEXT,isemployer BOOLEAN);
   
  . CREATE TABLE candidate_info(first_name TEXT,last_name TEXT,email VARCHAR(100) PRIMARY KEY,birthdate DATE,phone VARCHAR(100),user_id INT UNIQUE REFERENCES users(user_id) ON DELETE CASCADE ,country TEXT,studies TEXT,experience TEXT);
 
@@ -93,5 +92,4 @@ When you are ready change directories to your front_end folder and build your di
 - node server.js or nodemon server.js 
 
 
-EXTRA FEATURES : i want to add a way for employers to change there profile image and also a way for them to delete or edit there posts , and for candidates be able to apply for jobs .
 
