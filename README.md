@@ -7,7 +7,7 @@ The candidate will not have the privilege of posting job_offers ....
 
 
 
-# How to start use the app on your local machine :
+# How to start using the app on your local machine :
 
 First of you need to have atleast close versions of these :
  - Node.js v.24.16.0
@@ -26,11 +26,9 @@ Now you need to create your own data-base :
 
 [![Watch the video](https://img.youtube.com/vi/KuQUNHCeKCk/0.jpg)](https://www.youtube.com/watch?v=KuQUNHCeKCk)
 
- After installing PostgreSQL and logging you have to create a data base then create the tables .
+ After installing PostgreSQL and logging you have to create a data base then create the tables ,basically follow these steps : 
  
- These are the commands to enter so you can use the app with no problems comming from the database :
-
- - CREATE DATABASE job_board
+ - CREATE DATABASE job_board; (or a name of you choice)
   
  - \c job_board
 

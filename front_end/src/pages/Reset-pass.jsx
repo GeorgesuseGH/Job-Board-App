@@ -57,10 +57,10 @@ export const SetNewPass = () => {
                 }
 
             }}><label className="flex flex-row justify-items items-center m-5">New Password :
-                    <input onChange={e => setNewPass(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={newPass} autoComplete='new-password'></input></label>
+                    <input onChange={e => setNewPass(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-3 border-green-700 p-2" : "p-2 rounded-xl border-3 border-red-700"} value={newPass} autoComplete='new-password'></input></label>
                 <label  className="flex flex-row justify-items items-center  m-5">Confirm new Password :
                     
-                    <input onChange={e => setConfirm(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-2 border-green-700" : "rounded-xl border-2 border-red-700"} value={confirm}></input></label>
+                    <input onChange={e => setConfirm(e.target.value)} type="password" minLength="12" required className={sendable ? "rounded-xl border-3 border-green-700 p-2" : "p-2 rounded-xl border-3 border-red-700"} value={confirm}></input></label>
                <div className="flex flex-row items-center justify-center m-5">
                 <button disable={sendable} type="submit" className="rounded-xl border-2 bg-linear-to-tl from-primary via-secondary to-primary w-20">Set</button>
            </div> </form>
